@@ -15,10 +15,10 @@ def draw(x_axis,y_axis,label,color,x_label,y_label,title,lw):
 # assign the signal
 dt  =0.001                                                          
 t = np.arange(0,1,dt)                                               
-eq1 = 7*np.sin(2 *  np.pi * 3 * t)# 7Sin(3t) sin signal with frequency of 3 hertz
-draw(x_axis = t,y_axis = eq1 ,label="7Sin(3t)",color="y", x_label = "Time(s)",title="=",y_label = "Amplitude", lw=4)
+eq1 = 7*np.sin(2 *  np.pi * 3 * t)# 7Sin(3t) sin signal with frequency of 3 hertz   #input box
+draw(x_axis = t,y_axis = eq1 ,label="7Sin(3t)",color="y", x_label = "Time(s)",title="=",y_label = "Amplitude", lw=4)  
 
-eq2 = 3*np.cos(2 *  np.pi * 11 * t)# 3Sin11t sin signal with frequency of 11 hertz
+eq2 = 3*np.cos(2 *  np.pi * 11 * t)# 3Sin11t sin signal with frequency of 11 hertz  #input box
 draw(x_axis = t,y_axis = eq2 ,label="3Sin(11t)",color="plum", x_label = "Time(s)",title="+",y_label = "Amplitude", lw=4)
 # conbination of the signal
 Sum=eq1+eq2
@@ -52,7 +52,7 @@ plt.plot(t,noisy,label="Noisy", color="dodgerblue")
 plt.plot( t, Sum ,label="Org sound",color="orange",linewidth=3)
 plt.xlabel("Time(t)", fontsize = 20)
 plt.ylabel("Amplitude", fontsize= 20)
-plt.title("Noisy vs Original",fontsize = 30)
+plt.title("Noisy vs Original",fontsize = 30) #Show graph
 plt.legend(loc='upper right')
 # plt.show()
 
@@ -90,7 +90,7 @@ plt.plot(t,1000*inve_ft.reshape((1000,)),label="Re sound", color="lime")
 plt.plot( t, Sum ,label="Org sound",color="orange")
 plt.xlabel("Time(t)", fontsize = 20)
 plt.ylabel("Amplitude", fontsize= 20)
-plt.title("Recovered vs Original",fontsize = 30)
+plt.title("Recovered vs Original",fontsize = 30) #Show graph
 plt.legend(loc='upper right')
 # plt.savefig('sound.png')
 plt.show()
