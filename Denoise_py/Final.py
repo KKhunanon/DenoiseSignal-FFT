@@ -2,6 +2,9 @@ from tkinter import *
 import numpy as np
 import matplotlib.pyplot as plt
 
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+
 window = Tk()
 window.title("Denoise")
 
@@ -101,16 +104,12 @@ def generate():
     #--------------"Noisy vs Original"-----------------------------------
     noise = noise_add(NoiseLevel)
     noisy=noise+Sum
-    plt.figure(figsize = (15,5))
-    plt.grid(alpha = 0.3)
-    plt.style.use('dark_background')
-    plt.plot(t,noisy,label="Noisy", color="dodgerblue")
-    plt.plot( t, Sum ,label="Org sound",color="orange",linewidth=3)
-    plt.xlabel("Time(t)", fontsize = 20)
-    plt.ylabel("Amplitude", fontsize= 20)
-    plt.title("Noisy vs Original",fontsize = 30) #Show graph
-    plt.legend(loc='upper right')
-    plt.show()
+    fig, axs = plt.subplots(2, 1)
+    axs[0].plot(t,noisy,t, Sum )
+    axs[0].set_xlabel("Time(t)", fontsize = 20)
+    axs[0].set_ylabel("Amplitude", fontsize= 20)
+    axs[0].set_title("Noisy vs Original",fontsize = 30) #Show graph
+    axs[0].legend(loc='upper right')
 
     #--------------"Recovered vs Original"-----------------------------------
     # Frequency domain representation
@@ -123,17 +122,27 @@ def generate():
     indices = [psd > 2]
     filt_ft = ft*indices
     inve_ft = np.fft.ifft(filt_ft)
-    plt.figure(figsize = (15,5))
-    plt.grid(alpha = 0.3)
-    # plt.xticks(np.arange(13))
-    plt.style.use('dark_background')
-    plt.plot(t,1000*inve_ft.reshape((1000,)),label="Re sound", color="lime")
-    plt.plot( t, Sum ,label="Org sound",color="orange")
-    plt.xlabel("Time(t)", fontsize = 20)
-    plt.ylabel("Amplitude", fontsize= 20)
-    plt.title("Recovered vs Original",fontsize = 30)
-    plt.legend(loc='upper right')
+    axs[1].grid(alpha = 0.3)
+    axs[1].plot(t,1000*inve_ft.reshape((1000,)),label="Re sound", color="lime")
+    axs[1].plot( t, Sum ,label="Org sound",color="orange")
+    axs[1].set_xlabel("Time(t)", fontsize = 20)
+    axs[1].set_ylabel("Amplitude", fontsize= 20)
+    axs[1].set_title("Recovered vs Original",fontsize = 30)
+    axs[1].legend(loc='upper right')
+    # cxy, f = axs[1].cohere(s1, s2, 256, 1. / dt)
+    fig.tight_layout()
     plt.show()
+
+    # def mathplotcanvas_1(self):
+    #     f = Figure(figsize=(5, 5), dpi=100)
+    #     plt = f.add_subplot(111)
+
+    #     canvas = FigureCanvasTkAgg(f, self)
+    #     canvas.show()
+    #     canvas.get_tk_widget().pack(side=BOTTOM, fill=BOTH, expand=True)
+
+    #     toolbar = NavigationToolbar2Tk(canvas,)
+    #     canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=True)
 
 
 generate_button = Button(window, text="Generate", padx=10, pady=5 , command=generate)
