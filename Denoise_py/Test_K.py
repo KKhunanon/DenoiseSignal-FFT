@@ -105,13 +105,6 @@ def generate():
     noise = noise_add(NoiseLevel)
     noisy=noise+Sum
 
-    # fig, axs = plt.subplots(2, 1)
-    # axs[0].plot(t,noisy,t, Sum )
-    # axs[0].set_xlabel("Time(t)", fontsize = 20)
-    # axs[0].set_ylabel("Amplitude", fontsize= 20)
-    # axs[0].set_title("Noisy vs Original",fontsize = 30) #Show graph
-    # axs[0].legend(loc='upper right')
-
     #--------------"Recovered vs Original"-----------------------------------
     # Frequency domain representation
     ft = np.fft.fft(noisy)/len(noisy)      
@@ -123,39 +116,33 @@ def generate():
     indices = [psd > 2]
     filt_ft = ft*indices
     inve_ft = np.fft.ifft(filt_ft)
-    # axs[1].grid(alpha = 0.3)
-    # axs[1].plot(t,1000*inve_ft.reshape((1000,)),label="Re sound", color="lime")
-    # axs[1].plot( t, Sum ,label="Org sound",color="orange")
-    # axs[1].set_xlabel("Time(t)", fontsize = 20)
-    # axs[1].set_ylabel("Amplitude", fontsize= 20)
-    # axs[1].set_title("Recovered vs Original",fontsize = 30)
-    # axs[1].legend(loc='upper right')
-    # cxy, f = axs[1].cohere(s1, s2, 256, 1. / dt)
-    # fig.tight_layout()
-    #plt.show()
+    dt = 0.001                                                          
+    t = np.arange(0,1,dt)
 
+    #--fig 1
     f = Figure(figsize=(8, 6), dpi=100)
-    f.add_subplot(211).plot(t,noisy)
-    f.add_subplot(211).plot(t,Sum)
-    f.add_subplot(211).set_xlabel("Time(t)", fontsize = 10)
-    f.add_subplot(211).set_ylabel("Amplitude", fontsize= 10)
-    f.add_subplot(211).set_title("Noisy vs Original",fontsize = 12)
-    f.add_subplot(211).legend(loc='upper right')
-    
-    f.add_subplot(212).plot(t,1000*inve_ft.reshape((1000,))
-    f.add_subplot(212).plot( t,Sum)
-    f.add_subplot(212).set_xlabel("Time(t)", fontsize = 10)
-    f.add_subplot(212).set_ylabel("Amplitude", fontsize= 10)
-    f.add_subplot(212).set_title("Recovered vs Original",fontsize = 12)
-    f.add_subplot(212).legend(loc='upper right')
-
-    canvas = FigureCanvasTkAgg(f, window)
+    pic1 = f.add_subplot(211)
+    pic1.plot(t,noisy,label="Noisy", color="dodgerblue")
+    pic1.plot(t,Sum,label="Org sound",color="orange",linewidth=2.5)
+    pic1.set_xlabel("Time(t)", fontsize = 8)
+    pic1.set_ylabel("Amplitude", fontsize= 8)
+    pic1.set_title("Noisy vs Original",fontsize = 12)
+    pic1.legend(loc='upper right')
+    #--fig 2
+    pic2 = f.add_subplot(212)
+    pic2.plot(t,1000*inve_ft.reshape((1000,)),label="Re sound", color="lime")
+    pic2.plot( t,Sum,label="Org sound",color="orange")
+    pic2.set_xlabel("Time(t)", fontsize = 8)
+    pic2.set_ylabel("Amplitude", fontsize= 8)
+    pic2.set_title("Recovered vs Original",fontsize = 12)
+    pic2.legend(loc='upper right')
+    f.tight_layout()
+    canvas = FigureCanvasTkAgg(f, master = window)
     canvas.draw()
-    canvas.get_tk_widget().grid(row=0, column=3, rowspan=13)
+    
+    get_widz = canvas.get_tk_widget()
+    get_widz.grid(row=0, column=3, rowspan=13)
 
-    toolbar = NavigationToolbar2Tk(canvas, window)
-    toolbar.update()
-    canvas.get_tk_widget().place(x=10, y=10)
 
 
 generate_button = Button(window, text="Generate", padx=10, pady=5 , command=generate)

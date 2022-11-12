@@ -104,12 +104,6 @@ def generate():
     #--------------"Noisy vs Original"-----------------------------------
     noise = noise_add(NoiseLevel)
     noisy=noise+Sum
-    fig, axs = plt.subplots(2, 1)
-    axs[0].plot(t,noisy,t, Sum )
-    axs[0].set_xlabel("Time(t)", fontsize = 20)
-    axs[0].set_ylabel("Amplitude", fontsize= 20)
-    axs[0].set_title("Noisy vs Original",fontsize = 30) #Show graph
-    axs[0].legend(loc='upper right')
 
     #--------------"Recovered vs Original"-----------------------------------
     # Frequency domain representation
@@ -122,34 +116,37 @@ def generate():
     indices = [psd > 2]
     filt_ft = ft*indices
     inve_ft = np.fft.ifft(filt_ft)
-    axs[1].grid(alpha = 0.3)
-    axs[1].plot(t,1000*inve_ft.reshape((1000,)),label="Re sound", color="lime")
-    axs[1].plot( t, Sum ,label="Org sound",color="orange")
-    axs[1].set_xlabel("Time(t)", fontsize = 20)
-    axs[1].set_ylabel("Amplitude", fontsize= 20)
-    axs[1].set_title("Recovered vs Original",fontsize = 30)
-    axs[1].legend(loc='upper right')
-    # cxy, f = axs[1].cohere(s1, s2, 256, 1. / dt)
-    fig.tight_layout()
-    plt.show()
+    dt = 0.001                                                          
+    t = np.arange(0,1,dt)
 
-    # def mathplotcanvas_1(self):
-    #     f = Figure(figsize=(5, 5), dpi=100)
-    #     plt = f.add_subplot(111)
+    #--fig 1
+    f = Figure(figsize=(8, 6), dpi=100)
+    pic1 = f.add_subplot(211)
+    pic1.plot(t,noisy,label="Noisy", color="dodgerblue")
+    pic1.plot(t,Sum,label="Org sound",color="orange",linewidth=2.5)
+    pic1.set_xlabel("Time(t)", fontsize = 8)
+    pic1.set_ylabel("Amplitude", fontsize= 8)
+    pic1.set_title("Noisy vs Original",fontsize = 12)
+    pic1.legend(loc='upper right')
+    #--fig 2
+    pic2 = f.add_subplot(212)
+    pic2.plot(t,1000*inve_ft.reshape((1000,)),label="Re sound", color="lime")
+    pic2.plot( t,Sum,label="Org sound",color="orange")
+    pic2.set_xlabel("Time(t)", fontsize = 8)
+    pic2.set_ylabel("Amplitude", fontsize= 8)
+    pic2.set_title("Recovered vs Original",fontsize = 12)
+    pic2.legend(loc='upper right')
+    f.tight_layout()
+    canvas = FigureCanvasTkAgg(f, master = window)
+    canvas.draw()
+    
+    get_widz = canvas.get_tk_widget()
+    get_widz.grid(row=0, column=3, rowspan=13)
 
-    #     canvas = FigureCanvasTkAgg(f, self)
-    #     canvas.show()
-    #     canvas.get_tk_widget().pack(side=BOTTOM, fill=BOTH, expand=True)
-
-    #     toolbar = NavigationToolbar2Tk(canvas,)
-    #     canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=True)
 
 
 generate_button = Button(window, text="Generate", padx=10, pady=5 , command=generate)
 generate_button.grid(row=12, column=1)
 
-
-
-
-window.geometry("500x500+500+150")
+window.geometry("1000x700+500+150")
 window.mainloop()
