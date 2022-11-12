@@ -139,11 +139,11 @@ def generate():
 
     canvas = FigureCanvasTkAgg(f, window)
     canvas.draw()
-    canvas.get_tk_widget().grid(row=13, column=1)
+    canvas.get_tk_widget().grid(row=0, column=3, rowspan=13)
 
     toolbar = NavigationToolbar2Tk(canvas, window)
     toolbar.update()
-    canvas.get_tk_widget().grid(row=13, column=1)
+    canvas.get_tk_widget().grid(row=0, column=3, rowspan=13)
 
 
 generate_button = Button(window, text="Generate", padx=10, pady=5 , command=generate)
@@ -152,5 +152,5 @@ generate_button.grid(row=12, column=1)
 
 
 
-window.geometry("500x500+500+150")
+window.geometry("700x700+500+150")
 window.mainloop()
