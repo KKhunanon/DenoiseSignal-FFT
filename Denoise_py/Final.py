@@ -8,49 +8,52 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 window = Tk()
 window.title("Denoise")
 
-#label_data = Label(window, text="Data")
-#label_data.grid(row=0, column=0, columnspan=2)
-
 #-------------------------"Equation 1"-----------------------------------
 label_Equation_1 = Label(window, font=("Helvetica", 11, "bold"), text="Equation 1")
-label_Equation_1.grid(row=1, column=1, pady=10)
+label_Equation_1.grid(row=0, column=1, pady=20)
 
-label_Type_1 = Label(window, font=("Helvetica", 8, "bold"), text="Type : ")
-label_Type_1.grid(row=2, column=0, pady=25)
+Equation_1_frame = Frame(window, bd=7, width=100, relief=RIDGE )
+Equation_1_frame.grid(row=1, column=0, columnspan=3, padx=20)
+
+label_Type_1 = Label(Equation_1_frame, font=("Helvetica", 8, "bold"), text="Type : ")
+label_Type_1.grid(row=2, column=0, pady=15)
 drop_Type_1 = StringVar()
 drop_Type_1.set("select")
-drop_1 = OptionMenu(window, drop_Type_1, "sin", "cos")
+drop_1 = OptionMenu(Equation_1_frame, drop_Type_1, "sin", "cos")
 drop_1.grid(row=2, column=1)
 
-label_Amplitude_1 = Label(window, font=("Helvetica", 8, "bold"), text="Amplitude : ")
+label_Amplitude_1 = Label(Equation_1_frame, font=("Helvetica", 8, "bold"), text="Amplitude : ")
 label_Amplitude_1.grid(row=3, column=0, pady=15)
-entry_Amplitude_1 = Entry(window, borderwidth=2)
+entry_Amplitude_1 = Entry(Equation_1_frame, borderwidth=2)
 entry_Amplitude_1.grid(row=3, column=1)
 
-label_Frequency_1 = Label(window, font=("Helvetica", 8, "bold"), text="Frequency : ")
+label_Frequency_1 = Label(Equation_1_frame, font=("Helvetica", 8, "bold"), text="Frequency : ")
 label_Frequency_1.grid(row=4, column=0)
-entry_Frequency_1 = Entry(window, borderwidth=2)
+entry_Frequency_1 = Entry(Equation_1_frame, borderwidth=2)
 entry_Frequency_1.grid(row=4, column=1)
 
 #-------------------------"Equation 2"-----------------------------------
 label_Equation_2 = Label(window, font=("Helvetica", 11, "bold"),text="Equation 2")
 label_Equation_2.grid(row=5, column=1, pady=25)
 
-label_Type_2 = Label(window, font=("Helvetica", 8, "bold"), text="Type : ")
+Equation_2_frame = Frame(window, bd=7, width=100, relief=RIDGE )
+Equation_2_frame.grid(row=6, column=0, columnspan=3)
+
+label_Type_2 = Label(Equation_2_frame, font=("Helvetica", 8, "bold"), text="Type : ")
 label_Type_2.grid(row=6, column=0, pady=15)
 drop_Type_2 = StringVar()
 drop_Type_2.set("select")
-drop_2 = OptionMenu(window, drop_Type_2, "sin", "cos")
+drop_2 = OptionMenu(Equation_2_frame, drop_Type_2, "sin", "cos")
 drop_2.grid(row=6, column=1)
 
-label_Amplitude_2 = Label(window, font=("Helvetica", 8, "bold"), text="Amplitude : ")
+label_Amplitude_2 = Label(Equation_2_frame, font=("Helvetica", 8, "bold"), text="Amplitude : ")
 label_Amplitude_2.grid(row=7, column=0, pady=15)
-entry_Amplitude_2 = Entry(window, borderwidth=2)
+entry_Amplitude_2 = Entry(Equation_2_frame, borderwidth=2)
 entry_Amplitude_2.grid(row=7, column=1)
 
-label_Frequency_2 = Label(window, font=("Helvetica", 8, "bold"), text="Frequency : ")
+label_Frequency_2 = Label(Equation_2_frame, font=("Helvetica", 8, "bold"), text="Frequency : ")
 label_Frequency_2.grid(row=8, column=0)
-entry_Frequency_2 = Entry(window, borderwidth=2)
+entry_Frequency_2 = Entry(Equation_2_frame, borderwidth=2)
 entry_Frequency_2.grid(row=8, column=1)
 
 #-------------------------"Slide Bar"-----------------------------------
@@ -59,7 +62,7 @@ slide_bar.grid(row=9,column=1, pady=20)
 label_NoiseLevel = Label(window, font=("Helvetica", 9, "bold"), text="[Noise Level]")
 label_NoiseLevel.grid(row=10, column=1)
 
-#--------------------------"Setgrap"-------------------------
+#--------------------------"Set-grap"-------------------------
 #--fig 1
 f = Figure(figsize=(8, 6), dpi=100)
 pic1 = f.add_subplot(211)
@@ -82,7 +85,7 @@ canvas = FigureCanvasTkAgg(f, master = window)
 canvas.draw()
 
 get_widz = canvas.get_tk_widget()
-get_widz.grid(row=0, column=3, rowspan=13)
+get_widz.grid(row=0, column=3, rowspan=13, padx=5)
 
 #-------------------------"Reset Button // Reset Function"-----------------------------------
 def reset():
@@ -249,5 +252,5 @@ generate_button.grid(row=12, column=1)
 moreDetail_button = Button(window, text="More detail", padx=10, pady=5 , command=more_detail)
 moreDetail_button.grid(row=13, column=3, padx=360, pady=10)
 
-window.geometry("1000x660+250+50")
+window.geometry("1070x720+250+30")
 window.mainloop()
