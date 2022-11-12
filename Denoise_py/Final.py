@@ -59,6 +59,31 @@ slide_bar.grid(row=9,column=1, pady=20)
 label_NoiseLevel = Label(window, font=("Helvetica", 9, "bold"), text="[Noise Level]")
 label_NoiseLevel.grid(row=10, column=1)
 
+#--------------------------"Setgrap"-------------------------
+#--fig 1
+f = Figure(figsize=(8, 6), dpi=100)
+pic1 = f.add_subplot(211)
+pic1.set_xlabel("Time(t)", fontsize = 8)
+pic1.set_ylabel("Amplitude", fontsize= 8)
+pic1.set_title("Noisy vs Original",fontsize = 12)
+pic1.legend(loc='upper right')
+pic1.set_facecolor('black')
+pic1.grid('on', linestyle='--')
+#--fig 2
+pic2 = f.add_subplot(212)
+pic2.set_xlabel("Time(t)", fontsize = 8)
+pic2.set_ylabel("Amplitude", fontsize= 8)
+pic2.set_title("Recovered vs Original",fontsize = 12)
+pic2.legend(loc='upper right')
+pic2.set_facecolor('black')
+pic2.grid('on', linestyle='--')
+f.tight_layout()
+canvas = FigureCanvasTkAgg(f, master = window)
+canvas.draw()
+
+get_widz = canvas.get_tk_widget()
+get_widz.grid(row=0, column=3, rowspan=13)
+
 #-------------------------"Reset Button // Reset Function"-----------------------------------
 def reset():
     drop_Type_1.set("select")
