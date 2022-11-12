@@ -75,7 +75,7 @@ reset_button.grid(row=11, column=1)
 
 #-------------------------"Generate Button // Generate Function"-----------------------------------
 dt  =0.001                                                          
-t = np.arange(0,1,dt)
+#t = np.arange(0,1,dt)
 
 def noise_add(val):                               
     return val*np.random.sample(1000)-7
@@ -93,56 +93,57 @@ def set_data2():
     return (eval("{amp_data2}*np.{type_data2}( 2*np.pi * {fr_data2} * t)".format(amp_data2 =Amplitude_2, type_data2 = Type_2, fr_data2 = Frequency_2)))
 
 def generate():
-    NoiseLevel = int(slide_bar.get())
-    Sum = set_data1()+set_data2()
+    # NoiseLevel = int(slide_bar.get())
+    # Sum = set_data1()+set_data2()
 
-    tpCount     = len(Sum)
-    values      = np.arange(int(tpCount/2))
-    timePeriod  = tpCount/1000
-    frequencies = values/timePeriod
+    # tpCount     = len(Sum)
+    # values      = np.arange(int(tpCount/2))
+    # timePeriod  = tpCount/1000
+    # frequencies = values/timePeriod
     
-    #--------------"Noisy vs Original"-----------------------------------
-    noise = noise_add(NoiseLevel)
-    noisy=noise+Sum
-    fig, axs = plt.subplots(2, 1)
-    axs[0].plot(t,noisy,t, Sum )
-    axs[0].set_xlabel("Time(t)", fontsize = 20)
-    axs[0].set_ylabel("Amplitude", fontsize= 20)
-    axs[0].set_title("Noisy vs Original",fontsize = 30) #Show graph
-    axs[0].legend(loc='upper right')
+    # #--------------"Noisy vs Original"-----------------------------------
+    # noise = noise_add(NoiseLevel)
+    # noisy=noise+Sum
+    # fig, axs = plt.subplots(2, 1)
+    # axs[0].plot(t,noisy,t, Sum )
+    # axs[0].set_xlabel("Time(t)", fontsize = 20)
+    # axs[0].set_ylabel("Amplitude", fontsize= 20)
+    # axs[0].set_title("Noisy vs Original",fontsize = 30) #Show graph
+    # axs[0].legend(loc='upper right')
 
-    #--------------"Recovered vs Original"-----------------------------------
-    # Frequency domain representation
-    ft = np.fft.fft(noisy)/len(noisy)      
-    tpCount     = len(noisy)
-    values      = np.arange(int(tpCount/2))
-    timePeriod  = tpCount/1000
-    frequencies = values/timePeriod
-    psd=2*abs(ft)
-    indices = [psd > 2]
-    filt_ft = ft*indices
-    inve_ft = np.fft.ifft(filt_ft)
-    axs[1].grid(alpha = 0.3)
-    axs[1].plot(t,1000*inve_ft.reshape((1000,)),label="Re sound", color="lime")
-    axs[1].plot( t, Sum ,label="Org sound",color="orange")
-    axs[1].set_xlabel("Time(t)", fontsize = 20)
-    axs[1].set_ylabel("Amplitude", fontsize= 20)
-    axs[1].set_title("Recovered vs Original",fontsize = 30)
-    axs[1].legend(loc='upper right')
-    # cxy, f = axs[1].cohere(s1, s2, 256, 1. / dt)
-    fig.tight_layout()
-    plt.show()
+    # #--------------"Recovered vs Original"-----------------------------------
+    # # Frequency domain representation
+    # ft = np.fft.fft(noisy)/len(noisy)      
+    # tpCount     = len(noisy)
+    # values      = np.arange(int(tpCount/2))
+    # timePeriod  = tpCount/1000
+    # frequencies = values/timePeriod
+    # psd=2*abs(ft)
+    # indices = [psd > 2]
+    # filt_ft = ft*indices
+    # inve_ft = np.fft.ifft(filt_ft)
+    # axs[1].grid(alpha = 0.3)
+    # axs[1].plot(t,1000*inve_ft.reshape((1000,)),label="Re sound", color="lime")
+    # axs[1].plot( t, Sum ,label="Org sound",color="orange")
+    # axs[1].set_xlabel("Time(t)", fontsize = 20)
+    # axs[1].set_ylabel("Amplitude", fontsize= 20)
+    # axs[1].set_title("Recovered vs Original",fontsize = 30)
+    # axs[1].legend(loc='upper right')
+    # # cxy, f = axs[1].cohere(s1, s2, 256, 1. / dt)
+    # fig.tight_layout()
+    # plt.show()
 
-    # def mathplotcanvas_1(self):
-    #     f = Figure(figsize=(5, 5), dpi=100)
-    #     plt = f.add_subplot(111)
+    f = Figure(figsize=(5, 5), dpi=100)
+    t = np.arange(0, 3, .01)
+    f.add_subplot(111).plot(t, 2*np.sin(2*np.pi*t))
 
-    #     canvas = FigureCanvasTkAgg(f, self)
-    #     canvas.show()
-    #     canvas.get_tk_widget().pack(side=BOTTOM, fill=BOTH, expand=True)
+    canvas = FigureCanvasTkAgg(f, window)
+    canvas.draw()
+    canvas.get_tk_widget().grid(row=13, column=1)
 
-    #     toolbar = NavigationToolbar2Tk(canvas,)
-    #     canvas._tkcanvas.pack(side=TOP, fill=BOTH, expand=True)
+    toolbar = NavigationToolbar2Tk(canvas, window)
+    toolbar.update()
+    canvas.get_tk_widget().grid(row=13, column=1)
 
 
 generate_button = Button(window, text="Generate", padx=10, pady=5 , command=generate)
