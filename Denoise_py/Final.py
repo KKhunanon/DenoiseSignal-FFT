@@ -6,7 +6,7 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
 window = Tk()
-window.title("Denoise")
+window.title("Recover noisy signals using Fourier Transforms")
 
 #-------------------------"Equation 1"-----------------------------------
 label_Equation_1 = Label(window, font=("Helvetica", 11, "bold"), text="Equation 1")
