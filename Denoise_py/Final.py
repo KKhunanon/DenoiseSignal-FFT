@@ -130,7 +130,7 @@ dt  =0.001
 t = np.arange(0,1,dt)
 
 def noise_add(val):                               
-    return val*np.random.sample(1000)-7
+    return val*np.random.sample(1000)-(val/2)
 
 def set_data1():
     Amplitude_1 = int(entry_Amplitude_1.get())

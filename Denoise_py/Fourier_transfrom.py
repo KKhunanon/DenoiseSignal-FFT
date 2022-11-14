@@ -41,7 +41,7 @@ plt.setp(stemlines, 'linewidth', 2)
 # plt.savefig('fr_rep1.png')
 plt.show()
 # Generate a random Noise
-noise=14*np.random.sample(len(t))-7
+noise=14*np.random.sample(len(t))
 draw(x_axis = t,y_axis =noise ,label="noise",color="aquamarine", x_label = "Time(s)",y_label = "Amplitude", title="Noise", lw=1)
 noisy=noise+Sum
 draw(x_axis = t,y_axis =noisy ,label="noisy sound",color="dodgerblue", x_label = "Time(s)",y_label = "Amplitude",title="Noisy sound", lw=1)
